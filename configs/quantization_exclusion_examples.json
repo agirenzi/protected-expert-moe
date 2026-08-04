@@ -1,0 +1,52 @@
+{
+  "_comment": "Realistic exclusion patterns for protecting the router and the protected/safety expert. Adapt the glob patterns to the exact module names produced by your model definition.",
+
+  "nncf_optimum_style": {
+    "compression": {
+      "algorithm": "quantization",
+      "initializer": {
+        "range": {
+          "num_init_samples": 256,
+          "type": "mean_min_max"
+        }
+      },
+      "scope_overrides": {
+        "activations": {
+          ".*router.*": {"mode": "ignored"},
+          ".*protected_expert.*": {"mode": "ignored"},
+          ".*safety_expert.*": {"mode": "ignored"}
+        },
+        "weights": {
+          ".*router.*": {"mode": "ignored"},
+          ".*protected_expert.*": {"mode": "ignored"},
+          ".*safety_expert.*": {"mode": "ignored"}
+        }
+      }
+    }
+  },
+
+  "tensorrt_llm_style": {
+    "quantization": {
+      "quant_algo": "FP8",
+      "kv_cache_quant_algo": "FP8",
+      "exclude_modules": [
+        "*router*",
+        "*protected_expert*",
+        "*safety_expert.w_gate*",
+        "*safety_expert.w_up*",
+        "*safety_expert.w_down*"
+      ]
+    }
+  },
+
+  "bitsandbytes_manual_pattern": {
+    "_note": "When using bitsandbytes, leave the protected modules outside the quantized Linear replacement.",
+    "python_sketch": [
+      "for name, module in model.named_modules():",
+      "    if any(k in name for k in ('router', 'protected_expert', 'safety_expert')):",
+      "        continue  # leave in original high-precision dtype",
+      "    if isinstance(module, nn.Linear):",
+      "        # replace with bnb.nn.Linear4bit or Linear8bitLt"
+    ]
+  }
+}

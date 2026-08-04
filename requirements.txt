@@ -1,0 +1,8 @@
+torch>=2.0.0
+
+# Optional – only needed for real-model probing
+# transformer-lens
+# transformers
+# accelerate
+# safetensors
+# bitsandbytes
