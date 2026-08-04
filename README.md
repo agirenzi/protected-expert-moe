@@ -1,6 +1,10 @@
 # Protected Expert MoE
 
+# Protected Expert MoE
+
 A minimal, fully working research prototype for isolating high-precision experts from aggressive post-training quantization, together with a clean experimental protocol for studying whether certain SwiGLU activation outliers carry safety-relevant signal.
+
+[![Share on X](https://img.shields.io/badge/Share%20on%20X-000000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/intent/tweet?text=Protected%20Expert%20MoE%20%E2%80%94%20a%20research%20prototype%20for%20isolating%20high-precision%20experts%20%26%20studying%20SwiGLU%20activation%20outliers%20with%20safety%20signal&url=https%3A%2F%2Fgithub.com%2Fagirenzi%2Fprotected-expert-moe)
 
 This package is intentionally small, self-contained, and free of incomplete fragments. Everything that claims to run has been executed successfully.
 
